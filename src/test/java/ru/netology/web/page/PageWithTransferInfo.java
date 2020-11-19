@@ -14,13 +14,16 @@ public class PageWithTransferInfo {
     private SelenideElement transferButton = $("[data-test-id=action-transfer]");
 
     public PageWithTransferInfo() {
+
         headingh1.shouldBe(visible);
     }
 
-    public DashboardPage makeTransfer() {
+    public DashboardPage makeTransferV1() {
         sumOfTransfer.setValue("100");
         from.setValue("5559 0000 0000 0002");
         transferButton.click();
         return new DashboardPage();
     }
+
+
 }
