@@ -37,6 +37,15 @@ public class DataHelper {
     public static CardInfo getSecondCardInfo() {
         return new CardInfo("5559 0000 0000 0002");
     }
+
+    @Value
+    public static class TransferAmount {
+        int amount;
+    }
+
+    public static TransferAmount getTransferAmount() {
+        return new TransferAmount(1000);
+    }
 }
 
 

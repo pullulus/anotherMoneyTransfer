@@ -5,8 +5,6 @@ import com.codeborne.selenide.SelenideElement;
 import lombok.val;
 
 import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Condition.visible;
-import static com.codeborne.selenide.Selectors.withText;
 import static com.codeborne.selenide.Selenide.*;
 
 
@@ -14,12 +12,10 @@ public class DashboardPage {
     private SelenideElement heading = $("[data-test-id=dashboard]");
     private ElementsCollection cards = $$(".list__item");
     private final String balanceStart = "баланс: ";
-    private final String balanceFinish = " р. ";
+    private final String balanceFinish = " р.";
+    private SelenideElement firstCardButton = $$("[data-test-id=action-deposit]").first();
+    private SelenideElement secondCardButton = $$("[data-test-id=action-deposit]").last();
 
-    public void assertDashboardPage() {
-        heading.isDisplayed();
-
-    }
 
     private int extractBalance(String text) {
         val start = text.indexOf(balanceStart);
@@ -29,8 +25,18 @@ public class DashboardPage {
     }
 
     public int getCardBalance(String number) {
-        val text = cards.find(text(number.substring(15,19))).getText();
+        val text = cards.find(text(number.substring(15, 19))).getText();
         return extractBalance(text);
+    }
+
+    public PageWithTransferInfo startTransferFromFirstCard() {
+        firstCardButton.click();
+        return new PageWithTransferInfo();
+    }
+
+    public PageWithTransferInfo startTransferFromSecondCard() {
+        secondCardButton.click();
+        return new PageWithTransferInfo();
     }
 
 }

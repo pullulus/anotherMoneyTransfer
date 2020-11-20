@@ -2,7 +2,6 @@ package ru.netology.web.page;
 
 import com.codeborne.selenide.SelenideElement;
 
-import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
 
@@ -13,17 +12,25 @@ public class PageWithTransferInfo {
     private SelenideElement to = $("[data-test-id=to] input");
     private SelenideElement transferButton = $("[data-test-id=action-transfer]");
 
-    public PageWithTransferInfo() {
-
-        headingh1.shouldBe(visible);
-    }
-
-    public DashboardPage makeTransferV1() {
-        sumOfTransfer.setValue("100");
+    public DashboardPage makeTransferFromFirstToSecond() {
+        sumOfTransfer.setValue("1000");
         from.setValue("5559 0000 0000 0002");
         transferButton.click();
         return new DashboardPage();
     }
 
+    public DashboardPage makeTransferFromSecondToFirst() {
+        sumOfTransfer.setValue("1000");
+        from.setValue("5559 0000 0000 0001");
+        transferButton.click();
+        return new DashboardPage();
+    }
+
+    public DashboardPage makeTransferFromFirstToFirst() {
+        sumOfTransfer.setValue("1000");
+        from.setValue("5559 0000 0000 0001");
+        transferButton.click();
+        return new DashboardPage();
+    }
 
 }
