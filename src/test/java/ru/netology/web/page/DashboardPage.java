@@ -29,14 +29,14 @@ public class DashboardPage {
         return extractBalance(text);
     }
 
-    public PageWithTransferInfo startTransferFromFirstCard() {
+    public TransferInfoPage startTransferFromFirstCard() {
         firstCardButton.click();
-        return new PageWithTransferInfo();
+        return new TransferInfoPage();
     }
 
-    public PageWithTransferInfo startTransferFromSecondCard() {
+    public TransferInfoPage startTransferFromSecondCard() {
         secondCardButton.click();
-        return new PageWithTransferInfo();
+        return new TransferInfoPage();
     }
 
 }

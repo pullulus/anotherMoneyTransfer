@@ -26,14 +26,15 @@ public class MoneyTransferTest {
         val dashboardPage = verificationPage.validVerify(verificationCode);
         val firstCardBalance = dashboardPage.getCardBalance(getFirstCardInfo().getNumber());
         val secondCartBalance = dashboardPage.getCardBalance(getSecondCardInfo().getNumber());
-        val pageWithTransferInfo = dashboardPage.startTransferFromFirstCard();
-        val newDashboardPage = pageWithTransferInfo.makeTransfer("1000", "5559 0000 0000 0002" );
+        val transferInfoPage = dashboardPage.startTransferFromFirstCard();
+        val amount = 1000;
+        val newDashboardPage = transferInfoPage.makeTransfer(String.valueOf(amount), getSecondCardInfo().getNumber());
 
-        int actual = dashboardPage.getCardBalance(getFirstCardInfo().getNumber());
-        int expected = firstCardBalance + 1000;
+        val actual = dashboardPage.getCardBalance(getFirstCardInfo().getNumber());
+        val expected = firstCardBalance + 1000;
         assertEquals(expected, actual);
-        int actual2 = dashboardPage.getCardBalance(getSecondCardInfo().getNumber());
-        int expected2 = secondCartBalance - 1000;
+        val actual2 = dashboardPage.getCardBalance(getSecondCardInfo().getNumber());
+        val expected2 = secondCartBalance - 1000;
         assertEquals(expected2, actual2);
     }
 
@@ -46,15 +47,16 @@ public class MoneyTransferTest {
         val dashboardPage = verificationPage.validVerify(verificationCode);
         val firstCardBalance = dashboardPage.getCardBalance(getFirstCardInfo().getNumber());
         val secondCardBalance = dashboardPage.getCardBalance(getSecondCardInfo().getNumber());
-        val pageWithTransferInfo = dashboardPage.startTransferFromSecondCard();
-        val newDashboardPage = pageWithTransferInfo.makeTransfer("2000", "5559 0000 0000 0001" );
+        val transferInfoPage = dashboardPage.startTransferFromSecondCard();
+        val amount = 2000;
+        val newDashboardPage = transferInfoPage.makeTransfer(String.valueOf(amount), getFirstCardInfo().getNumber());
 
-        int actual = dashboardPage.getCardBalance(getSecondCardInfo().getNumber());
-        int expected = secondCardBalance + 2000;
+        val actual = dashboardPage.getCardBalance(getSecondCardInfo().getNumber());
+        val expected = secondCardBalance + 2000;
         assertEquals(expected, actual);
-        int actual2 = dashboardPage.getCardBalance(getFirstCardInfo().getNumber());
-        int expected2 = firstCardBalance - 2000;
-        assertEquals(expected2,actual2);
+        val actual2 = dashboardPage.getCardBalance(getFirstCardInfo().getNumber());
+        val expected2 = firstCardBalance - 2000;
+        assertEquals(expected2, actual2);
     }
 
     @Test
@@ -65,10 +67,11 @@ public class MoneyTransferTest {
         val verificationCode = DataHelper.getVerificationCodeFor(authInfo);
         val dashboardPage = verificationPage.validVerify(verificationCode);
         val firstCardBalance = dashboardPage.getCardBalance(getFirstCardInfo().getNumber());
-        val pageWithTransferInfo = dashboardPage.startTransferFromFirstCard();
-        val newDashboardPage = pageWithTransferInfo.makeTransfer("3000", "5559 0000 0000 0001" );
+        val transferInfoPage = dashboardPage.startTransferFromFirstCard();
+        val amount = 3000;
+        val newDashboardPage = transferInfoPage.makeTransfer(String.valueOf(amount), getFirstCardInfo().getNumber());
 
-        int actual = dashboardPage.getCardBalance(getFirstCardInfo().getNumber());
+        val actual = dashboardPage.getCardBalance(getFirstCardInfo().getNumber());
         assertEquals(firstCardBalance, actual);
     }
 
@@ -81,12 +84,15 @@ public class MoneyTransferTest {
         val dashboardPage = verificationPage.validVerify(verificationCode);
         val firstCardBalance = dashboardPage.getCardBalance(getFirstCardInfo().getNumber());
         val secondCartBalance = dashboardPage.getCardBalance(getSecondCardInfo().getNumber());
-        val bigAmount = secondCartBalance + 1000;
-        val pageWithTransferInfo = dashboardPage.startTransferFromFirstCard();
-        val newDashboardPage = pageWithTransferInfo.makeTransfer("bigAmount", "5559 0000 0000 0002" );
+        val transferInfoPage = dashboardPage.startTransferFromFirstCard();
+        val bigAmount = Math.abs(secondCartBalance) + 1000;
+        val newDashboardPage = transferInfoPage.makeTransfer(String.valueOf(bigAmount), getSecondCardInfo().getNumber());
 
-        int actual = dashboardPage.getCardBalance(getFirstCardInfo().getNumber());
-        int expected = firstCardBalance + bigAmount;
-        assertEquals(expected, actual);
+        transferInfoPage.getErrorMessage();
+        val actual = dashboardPage.getCardBalance(getFirstCardInfo().getNumber());
+        assertEquals(firstCardBalance, actual);
+        val actual2 = dashboardPage.getCardBalance(getSecondCardInfo().getNumber());
+        assertEquals(secondCartBalance, actual2);
     }
+
 }
